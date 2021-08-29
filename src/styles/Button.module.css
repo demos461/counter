@@ -1,0 +1,27 @@
+.btn {
+    color: #494949;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 5px;
+    margin: 1px;
+    border: 2px solid #494949;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+    width: 60px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    color: #ffffff;
+    background: #f6b93b;
+    border-color: #f6b93b;
+    transition: all 0.4s ease 0s;
+}
+
+.btn:disabled {
+    cursor: default;
+    background-color: darkgray;
+    border: 2px solid darkgray;
+    color: gray;
+}
