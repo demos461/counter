@@ -1,4 +1,4 @@
-.wrapper {
+.settings {
     height: 150px;
     width: 250px;
     display: flex;
@@ -9,3 +9,14 @@
     padding: 10px;
 }
 
+input {
+    display: block;
+    width: 100px;
+    padding: 5px;
+    background-color: #f6b93b;
+}
+
+.error {
+    border: red solid 2px;
+    background-color: orangered;
+}
