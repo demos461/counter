@@ -18,9 +18,9 @@ const Counter: React.FC<CounterProps> = ({maxValue, minValue, setShowSettings}) 
         if (counterAsString) {
             const counter = JSON.parse(counterAsString)
             setCount(counter)
-            if (counter < minValue) setCount(minValue)
+            if (counter < minValue || counter > maxValue) setCount(minValue)
         }
-    }, [])
+    }, [maxValue, minValue])
 
     useEffect(() => {
         localStorage.setItem('countValue', JSON.stringify(count))
