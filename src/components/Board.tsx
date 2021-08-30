@@ -3,11 +3,12 @@ import s from '../styles/Board.module.css'
 
 type BoardProps = {
     count: number
+    maxValue: number
 }
 
-const Board: React.FC<BoardProps> = ({count}) => {
+const Board: React.FC<BoardProps> = ({count,maxValue}) => {
     return (
-        <div className={`${s.board} ${count === 5 ? s.red : ''}`}>
+        <div className={`${s.board} ${count === maxValue ? s.red : ''}`}>
             {count}
         </div>
     );

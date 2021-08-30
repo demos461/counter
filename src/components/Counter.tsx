@@ -1,28 +1,52 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from '../styles/Counter.module.css'
 import Board from './Board';
 import Button from './Button';
 
-const Counter = () => {
+type CounterProps = {
+    minValue: number
+    maxValue: number
+    setShowSettings: (bool: boolean) => void
+}
 
-    const [count, setCount] = useState(0)
+const Counter: React.FC<CounterProps> = ({maxValue, minValue, setShowSettings}) => {
+
+    const [count, setCount] = useState(minValue)
+
+    useEffect(() => {
+        const counterAsString = localStorage.getItem('countValue')
+        if (counterAsString) {
+            const counter = JSON.parse(counterAsString)
+            setCount(counter)
+            if (counter < minValue) setCount(minValue)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('countValue', JSON.stringify(count))
+    }, [count])
 
     const changeCount = () => {
-        let newCount = count + 1
-        setCount(newCount)
+        setCount(count + 1)
     }
 
     const resetCount = () => {
-        setCount(0)
+        setCount(minValue)
+    }
+
+    const showSettings = () => {
+        setShowSettings(true)
     }
 
 
     return (
         <div className={s.wrapper}>
-            <Board count={count}/>
+            <Board count={count} maxValue={maxValue}/>
             <div className={s.btnGroup}>
-                <Button callBack={changeCount} disabled={count === 5} title={'INC'}/>
-                <Button callBack={resetCount} disabled={count === 0} title={'RESET'}/>
+                <Button callBack={changeCount} disabled={count === maxValue} title={'INC'}/>
+                <Button callBack={resetCount} disabled={count === minValue} title={'RESET'}/>
+                <Button title={'SET'} callBack={showSettings} disabled={false}/>
+
             </div>
 
 
