@@ -1,16 +1,23 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from '../styles/Settings.module.css'
 import Button from './Button';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../redux/store';
+import {changeCurrentValue, changeMaxValue, changeMinValue, CounterStateType} from '../redux/reducers/counter-reducer';
 
 type SettingsProps = {
-    minValue: number
-    maxValue: number
-    setMinValue: (newValue: number) => void
-    setMaxValue: (newValue: number) => void
     setShowSettings: (bool: boolean) => void
 }
 
-const Settings: React.FC<SettingsProps> = ({minValue, maxValue, setMaxValue, setMinValue, setShowSettings}) => {
+const Settings: React.FC<SettingsProps> = ({setShowSettings}) => {
+
+    const dispatch = useDispatch()
+    const {
+        currentValue,
+        minValue,
+        maxValue,
+    } = useSelector<AppRootStateType, CounterStateType>((state) => state.counter)
+
 
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [error, setError] = useState(false);
@@ -23,16 +30,19 @@ const Settings: React.FC<SettingsProps> = ({minValue, maxValue, setMaxValue, set
             setError(false)
             setBtnDisabled(false)
         }
+        if (currentValue < min) dispatch(changeCurrentValue(min))
+        if (currentValue > max) dispatch(changeCurrentValue(max))
+
     }
 
     const setMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMinValue(+e.currentTarget.value)
+        dispatch(changeMinValue(+e.currentTarget.value))
         checkError(+e.currentTarget.value, maxValue)
     }
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxValue(+e.currentTarget.value)
-        checkError(minValue,+e.currentTarget.value)
+        dispatch(changeMaxValue(+e.currentTarget.value))
+        checkError(minValue, +e.currentTarget.value)
     }
 
     const showCounter = () => setShowSettings(false)
