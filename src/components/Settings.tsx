@@ -32,13 +32,11 @@ const Settings: React.FC<SettingsProps> = ({minValue, maxValue, setMaxValue, set
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setMaxValue(+e.currentTarget.value)
-        console.log('max ' + maxValue)
         checkError(minValue,+e.currentTarget.value)
     }
 
-    const showCounter = () => {
-        setShowSettings(false)
-    }
+    const showCounter = () => setShowSettings(false)
+
 
     return (
         <div className={s.settings}>
